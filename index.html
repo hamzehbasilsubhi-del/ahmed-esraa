@@ -36,6 +36,7 @@
             background-size: 100% 3000px;
             color: #2C3E50;
             font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
         }
         .font-serif-custom {
             font-family: 'Cormorant Garamond', serif;
@@ -61,6 +62,11 @@
             background-position: center;
             background-repeat: no-repeat;
             background-blend-mode: overlay;
+        }
+
+        /* شاشة الغلاف وتأثيرات الانتقال السلس */
+        #introScreen {
+            transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
         }
 
         /* Typewriter & Sequential Fade-in Animations with GPU Acceleration */
@@ -107,8 +113,27 @@
 </head>
 <body class="text-deepNavy antialiased selection:bg-mist selection:text-deepNavy">
 
+    <!-- INTRO SCREEN: Interactive Envelope & Opening Video[cite: 8] -->
+    <div id="introScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-between bg-[#2C3E50] cursor-pointer py-10" onclick="startInvitation()">
+        <!-- Envelope Cover Image Container -->
+        <div id="envelopeContainer" class="relative max-w-md w-full h-full flex items-center justify-center p-4">
+            <img src="assets/envelope_cover.png" alt="Wedding Envelope" class="w-full h-full object-cover absolute inset-0 shadow-2xl" />
+            
+            <!-- Tap to Open in cursive font at the bottom -->
+            <div class="absolute bottom-10 z-10 text-center animate-pulse">
+                <span class="font-script text-3xl md:text-4xl text-white tracking-wide drop-shadow-md">Tap to Open</span>
+            </div>
+        </div>
+
+        <!-- Envelope Opening Video (Hidden initially, plays on click) -->
+        <video id="openingVideo" class="absolute inset-0 w-full h-full object-cover hidden" playsinline muted>
+            <source src="assets/envelope_opening.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
     <!-- Audio Player Toggle (Top Right) -->
-    <div class="fixed top-5 right-5 z-50">
+    <div class="fixed top-5 right-5 z-40">
         <button id="audioToggle" onclick="toggleAudio()" aria-label="Toggle Audio" class="w-10 h-10 rounded-full bg-white/85 backdrop-blur-md shadow-sm border border-mist flex items-center justify-center text-deepNavy hover:bg-white transition">
             <svg id="audioIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
@@ -131,35 +156,30 @@
                     <source src="assets/swan_hero_video.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-                <!-- التدرج المحسن في الأسفل ليتلاشى بسلاسة تامة نحو اللون الأبيض الناصع `#FFFFFF` -->
                 <div class="absolute inset-0 bg-gradient-to-b from-white/20 via-black/10 via-65% to-[#FFFFFF]"></div>
             </div>
 
             <!-- Centered Content with Sequential Vertical Typewriter Layout -->
             <div class="relative z-10 space-y-2 my-auto flex flex-col items-center">
                 
-                <!-- Line 1: Ahmed -->
                 <div class="inline-block">
                     <h1 class="font-script text-3xl md:text-4xl text-deepNavy drop-shadow-md typewriter-line-1">
                         Ahmed
                     </h1>
                 </div>
 
-                <!-- Line 2: & -->
                 <div class="inline-block">
                     <span class="font-script text-2xl md:text-3xl text-deepNavy drop-shadow-sm typewriter-line-2">
                         &
                     </span>
                 </div>
 
-                <!-- Line 3: Esraa -->
                 <div class="inline-block">
                     <h1 class="font-script text-3xl md:text-4xl text-deepNavy drop-shadow-md typewriter-line-3">
                         Esraa
                     </h1>
                 </div>
 
-                <!-- Date (Fade In after typewriter) -->
                 <div class="animate-fade-in-date pt-3">
                     <p class="font-serif-custom text-sm tracking-[0.25em] uppercase text-deepNavy/90 font-medium drop-shadow-sm">
                         28 &bull; 11 &bull; 2026
@@ -177,7 +197,7 @@
             </div>
         </section>
 
-        <!-- SECTION 2: WELCOME MESSAGE (خلفية بيضاء خالصة) -->
+        <!-- SECTION 2: WELCOME MESSAGE -->
         <section id="welcome" class="py-16 px-8 text-center relative welcome-white-bg">
             <div class="max-w-xs mx-auto space-y-6">
                 <h3 class="font-serif-custom text-xs tracking-[0.3em] uppercase text-softGrey">
@@ -190,10 +210,9 @@
 
                 <div class="pt-2">
                     <h4 class="font-serif-custom text-2xl italic text-deepNavy">Ahmed & Esraa</h4>
-                    <div class="flex justify-center pt-2">
-                        <span class="inline-block w-6 h-[1px] bg-silverBlue"></span>
-                        <span class="mx-2 text-[10px] text-silverBlue">&hearts;</span>
-                        <span class="inline-block w-6 h-[1px] bg-silverBlue"></span>
+                    <!-- Custom Floral Divider -->
+                    <div class="flex justify-center pt-3">
+                        <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
                     </div>
                 </div>
             </div>
@@ -201,21 +220,19 @@
 
         <!-- SECTION 3: THE SCHEDULE -->
         <section id="scheduleSection" class="py-16 px-4 relative schedule-bg overflow-hidden">
-            <div class="text-center mb-12">
+            <div class="text-center mb-10">
                 <h2 class="font-serif-custom text-2xl md:text-3xl tracking-[0.2em] uppercase text-deepNavy font-normal">
                     The Schedule
                 </h2>
-                <div class="flex justify-center pt-2">
-                    <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
-                    <span class="mx-2 text-xs text-silverBlue">&hearts;</span>
-                    <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+                <!-- Custom Floral Divider -->
+                <div class="flex justify-center pt-3">
+                    <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
                 </div>
             </div>
 
             <!-- Timeline Container with Enhanced Sinuous Center Line & Blue Pearl Moving Icon -->
             <div class="relative max-w-sm mx-auto">
                 
-                <!-- SVG Sinuous Center Line with Blue Pearl Moving Element -->
                 <div class="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-20 pointer-events-none z-10">
                     <svg id="timelineSvg" class="w-full h-full overflow-visible" viewBox="0 0 80 900" fill="none" preserveAspectRatio="none">
                         <path id="zigzagPath" d="M40 0 C 75 180, 5 360, 40 540 C 75 720, 5 810, 40 900" stroke="#A9C2D9" stroke-width="2" stroke-dasharray="none" opacity="0.85"/>
@@ -223,7 +240,7 @@
                     </svg>
                 </div>
 
-                <!-- Event 1: Guest Arrival (4:30 PM) -->
+                <!-- Event 1 -->
                 <div class="relative z-20 flex items-center justify-between mb-16 flex-row-reverse">
                     <div class="w-5/12 text-center pl-2 relative flex items-center justify-center">
                         <img src="assets/shoe_icon.png" alt="Guest arrival" class="w-20 h-auto mx-auto object-contain drop-shadow-sm" loading="lazy">
@@ -236,7 +253,7 @@
                     </div>
                 </div>
 
-                <!-- Event 2: Zaffa (5:00 PM) -->
+                <!-- Event 2 -->
                 <div class="relative z-20 flex items-center justify-between mb-16">
                     <div class="w-5/12 text-center pr-2 relative flex items-center justify-center">
                         <img src="assets/rings_icon.png" alt="Zaffa" class="w-18 h-auto mx-auto object-contain drop-shadow-sm" loading="lazy">
@@ -249,7 +266,7 @@
                     </div>
                 </div>
 
-                <!-- Event 3: Dinner (7:30 PM) -->
+                <!-- Event 3 -->
                 <div class="relative z-20 flex items-center justify-between mb-16 flex-row-reverse">
                     <div class="w-5/12 text-center pl-2 relative flex items-center justify-center">
                         <img src="assets/champagne_icon.png" alt="Dinner" class="w-18 h-auto mx-auto object-contain drop-shadow-sm" loading="lazy">
@@ -262,7 +279,7 @@
                     </div>
                 </div>
 
-                <!-- Event 4: Second Entrance (8:30 PM) -->
+                <!-- Event 4 -->
                 <div class="relative z-20 flex items-center justify-between">
                     <div class="w-5/12 text-center pr-2 relative flex items-center justify-center">
                         <img src="assets/couple_illustration.png" alt="Second entrance" class="w-20 h-auto mx-auto object-contain drop-shadow-sm" loading="lazy">
@@ -283,10 +300,9 @@
             <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy mb-2">
                 Counting Down To Forever
             </h3>
+            <!-- Custom Floral Divider -->
             <div class="flex justify-center mb-8">
-                <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
-                <span class="mx-2 text-xs text-silverBlue">&hearts;</span>
-                <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+                <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
             </div>
 
             <!-- Countdown Timer -->
@@ -326,10 +342,9 @@
                 <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy">
                     Our Wedding Details
                 </h3>
+                <!-- Custom Floral Divider -->
                 <div class="flex justify-center">
-                    <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
-                    <span class="mx-2 text-xs text-silverBlue">&hearts;</span>
-                    <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+                    <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
                 </div>
 
                 <p class="font-serif-custom text-xl italic text-deepNavy">
@@ -365,10 +380,9 @@
             <h3 class="font-serif-custom text-2xl md:text-3xl tracking-[0.2em] uppercase text-deepNavy mb-2">
                 Dress Code
             </h3>
+            <!-- Custom Floral Divider -->
             <div class="flex justify-center mb-6">
-                <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
-                <span class="mx-2 text-xs text-silverBlue">&hearts;</span>
-                <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+                <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
             </div>
 
             <p class="font-serif-custom text-lg md:text-xl text-deepNavy font-medium tracking-wide mb-8">
@@ -389,10 +403,9 @@
             <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy mb-2">
                 Will You Join Us?
             </h3>
+            <!-- Custom Floral Divider -->
             <div class="flex justify-center mb-6">
-                <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
-                <span class="mx-2 text-xs text-silverBlue">&hearts;</span>
-                <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+                <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
             </div>
 
             <p class="text-xs uppercase tracking-widest text-softGrey mb-8">
@@ -430,7 +443,6 @@
             <div class="w-full leading-none relative">
                 <img src="assets/footer_swan.png" alt="Landscape with swans" class="w-full h-auto object-cover block opacity-95" loading="lazy">
                 
-                <!-- Text Overlaid on the lower portion of the footer swan image -->
                 <div class="absolute bottom-6 left-0 right-0 z-10 px-4 text-center">
                     <h4 class="font-serif-custom text-2xl md:text-3xl italic text-deepNavy drop-shadow-sm mb-1">Ahmed & Esraa</h4>
                     <p class="text-[10px] uppercase tracking-[0.3em] text-deepNavy/80 drop-shadow-sm font-medium">Our forever begins here.</p>
@@ -442,7 +454,51 @@
 
     <!-- JavaScript Interactions & Blue Pearl Animation -->
     <script>
-        // Audio Toggle Script
+        let hasStarted = false;
+        function startInvitation() {
+            if (hasStarted) return;
+            hasStarted = true;
+
+            const envelopeContainer = document.getElementById('envelopeContainer');
+            const openingVideo = document.getElementById('openingVideo');
+            const introScreen = document.getElementById('introScreen');
+            const bgAudio = document.getElementById('bgAudio');
+
+            if (bgAudio) {
+                bgAudio.play().then(() => {
+                    isPlaying = true;
+                    const icon = document.getElementById('audioIcon');
+                    if(icon) {
+                        icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />`;
+                    }
+                }).catch(e => console.log("Audio play prevented:", e));
+            }
+
+            if (envelopeContainer) envelopeContainer.style.display = 'none';
+            if (openingVideo) {
+                openingVideo.classList.remove('hidden');
+                openingVideo.play().catch(e => {
+                    closeIntro();
+                });
+
+                openingVideo.onended = () => {
+                    closeIntro();
+                };
+            } else {
+                closeIntro();
+            }
+        }
+
+        function closeIntro() {
+            const introScreen = document.getElementById('introScreen');
+            if (introScreen) {
+                introScreen.style.opacity = '0';
+                setTimeout(() => {
+                    introScreen.style.visibility = 'hidden';
+                }, 800);
+            }
+        }
+
         let isPlaying = false;
         function toggleAudio() {
             const audio = document.getElementById('bgAudio');
@@ -457,11 +513,10 @@
                 audio.play().then(() => {
                     isPlaying = true;
                     icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />`;
-                }).catch(e => console.log("Audio play prevented by browser policy:", e));
+                }).catch(e => console.log("Audio play prevented:", e));
             }
         }
 
-        // Scroll-driven animation for the blue pearl image
         window.addEventListener('scroll', () => {
             const section = document.getElementById('scheduleSection');
             const path = document.getElementById('zigzagPath');
@@ -487,7 +542,6 @@
             pearl.setAttribute('y', point.y - (pearlHeight / 2));
         });
 
-        // Countdown Timer Logic (Target: Nov 28, 2026 16:30:00)
         const weddingDate = new Date("November 28, 2026 16:30:00").getTime();
         function updateCountdown() {
             const now = Date.now();
@@ -508,7 +562,6 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // RSVP Selection & Handling
         let selectedAttendance = '';
         function setAttendance(status) {
             selectedAttendance = status;
@@ -541,7 +594,6 @@
             if (successMsg) successMsg.style.display = 'block';
         }
 
-        // Add to Calendar Integration
         function addToCalendar() {
             const title = encodeURIComponent("Ahmed & Esraa Wedding");
             const details = encodeURIComponent("Join us in celebrating our wedding ceremony at Fujairah Beach Resort.");
