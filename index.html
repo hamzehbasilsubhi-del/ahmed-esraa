@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ahmed & Esraa - Wedding Invitation</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -30,14 +30,16 @@
         }
     </script>
     <style>
-        /* توحيد خلفية الدعوة كاملة بمزيج ناعم ونظيف */
+        /* توحيد خلفية الصفحة العامة وتجنب التمرير العرضي */
         body {
             background: linear-gradient(180deg, #FDFBF7 0%, #D4E2EE 25%, #FDFBF7 50%, #D4E2EE 75%, #FDFBF7 100%);
-            background-size: 100% 3000px;
             color: #2C3E50;
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
+
         .font-serif-custom {
             font-family: 'Cormorant Garamond', serif;
         }
@@ -45,17 +47,14 @@
             font-family: 'Pinyon Script', cursive;
         }
         
-        /* إزالة الخلفيات الشفافة للأقسام العادية لتبدو متصلة */
         .unified-bg {
             background: transparent;
         }
 
-        /* خلفية بيضاء خالصة ومخصصة لقسم الترحيب أسفل البانر مباشرة */
         .welcome-white-bg {
             background-color: #FFFFFF;
         }
 
-        /* خلفية خاصة بقسم الجدول مع التدرج السلس لإنهاء القسم للاندماج مع العداد */
         .schedule-bg {
             background-image: linear-gradient(to bottom, #FFFFFF 0%, rgba(212, 227, 238, 0.4) 30%, rgba(212, 227, 238, 0.85) 85%, #d4e3ee 100%), url('assets/schedule_bg.png');
             background-size: cover;
@@ -64,12 +63,57 @@
             background-blend-mode: overlay;
         }
 
-        /* شاشة الغلاف وتأثيرات الانتقال السلس */
+        /* شاشة الغلاف بملء الشاشة وتجنب أي تشوه في الأبعاد */
         #introScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #2C3E50;
             transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+            overflow: hidden;
         }
 
-        /* Typewriter & Sequential Fade-in Animations with GPU Acceleration */
+        #envelopeContainer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #envelopeContainer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* يملأ الشاشة تماماً بدون تشوه */
+        }
+
+        #openingVideo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* تناسق تام لفيديو الفتح مع الشاشة */
+        }
+
+        /* حاوية الدعوة الأساسية متجاوبة تماماً مع شاشات الموبايل */
+        main {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+            background-color: transparent;
+        }
+
+        /* تأثيرات الكتابة المتسلسلة */
         @keyframes typing {
             from { width: 0; opacity: 0; }
             to { width: 100%; opacity: 1; }
@@ -85,7 +129,6 @@
             white-space: nowrap;
             width: 0;
             animation: typing 1.2s steps(30, end) 0.5s forwards;
-            will-change: width, opacity;
         }
 
         .typewriter-line-2 {
@@ -93,7 +136,6 @@
             white-space: nowrap;
             width: 0;
             animation: typing 0.8s steps(10, end) 1.7s forwards;
-            will-change: width, opacity;
         }
 
         .typewriter-line-3 {
@@ -101,32 +143,27 @@
             white-space: nowrap;
             width: 0;
             animation: typing 1.2s steps(30, end) 2.3s forwards;
-            will-change: width, opacity;
         }
 
         .animate-fade-in-date {
             animation: fadeIn 1.2s ease-out 3.5s forwards;
             opacity: 0;
-            will-change: transform, opacity;
         }
     </style>
 </head>
 <body class="text-deepNavy antialiased selection:bg-mist selection:text-deepNavy">
 
     <!-- INTRO SCREEN: Interactive Envelope & Opening Video -->
-    <div id="introScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-between bg-[#2C3E50] cursor-pointer py-10" onclick="startInvitation()">
-        <!-- Envelope Cover Image Container -->
-        <div id="envelopeContainer" class="relative max-w-md w-full h-full flex items-center justify-center p-4">
-            <img src="assets/envelope_cover.png" alt="Wedding Envelope" class="w-full h-full object-cover absolute inset-0 shadow-2xl" />
+    <div id="introScreen" onclick="startInvitation()">
+        <div id="envelopeContainer">
+            <img src="assets/envelope_cover.png" alt="Wedding Envelope" />
             
-            <!-- Tap to Open in cursive font at the bottom -->
-            <div class="absolute bottom-10 z-10 text-center animate-pulse">
+            <div class="absolute bottom-12 z-10 text-center animate-pulse cursor-pointer">
                 <span class="font-script text-3xl md:text-4xl text-white tracking-wide drop-shadow-md">Tap to Open</span>
             </div>
         </div>
 
-        <!-- Envelope Opening Video (Muted to ensure only background music plays) -->
-        <video id="openingVideo" class="absolute inset-0 w-full h-full object-cover hidden" playsinline muted>
+        <video id="openingVideo" class="hidden" playsinline muted>
             <source src="assets/envelope_opening.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -139,19 +176,17 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
             </svg>
         </button>
-        <!-- Background Music Audio Element -->
         <audio id="bgAudio" loop preload="auto">
             <source src="assets/wedding_melody.mp3" type="audio/mpeg">
         </audio>
     </div>
 
     <!-- MAIN CONTAINER -->
-    <main class="max-w-md mx-auto min-h-screen shadow-2xl relative overflow-hidden bg-transparent">
+    <main>
 
         <!-- SECTION 1: FULL SCREEN VIDEO BACKGROUND HERO -->
         <section class="relative h-screen w-full flex flex-col justify-center items-center text-center px-6 overflow-hidden">
             
-            <!-- Video Background covering the entire screen (Muted to keep focus on background music) -->
             <div class="absolute inset-0 w-full h-full z-0 overflow-hidden bg-black">
                 <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-80">
                     <source src="assets/swan_hero_video.mp4" type="video/mp4">
@@ -160,27 +195,22 @@
                 <div class="absolute inset-0 bg-gradient-to-b from-white/20 via-black/10 via-65% to-[#FFFFFF]"></div>
             </div>
 
-            <!-- Centered Content with Sequential Vertical Typewriter Layout -->
             <div class="relative z-10 space-y-2 my-auto flex flex-col items-center">
-                
                 <div class="inline-block">
                     <h1 class="font-script text-3xl md:text-4xl text-deepNavy drop-shadow-md typewriter-line-1">
                         Ahmed
                     </h1>
                 </div>
-
                 <div class="inline-block">
                     <span class="font-script text-2xl md:text-3xl text-deepNavy drop-shadow-sm typewriter-line-2">
                         &
                     </span>
                 </div>
-
                 <div class="inline-block">
                     <h1 class="font-script text-3xl md:text-4xl text-deepNavy drop-shadow-md typewriter-line-3">
                         Esraa
                     </h1>
                 </div>
-
                 <div class="animate-fade-in-date pt-3">
                     <p class="font-serif-custom text-sm tracking-[0.25em] uppercase text-deepNavy/90 font-medium drop-shadow-sm">
                         28 &bull; 11 &bull; 2026
@@ -188,7 +218,6 @@
                 </div>
             </div>
 
-            <!-- Scroll Down Indicator at the bottom -->
             <div class="absolute bottom-6 left-0 right-0 z-10 animate-bounce">
                 <a href="#welcome" aria-label="Scroll to welcome section" class="text-deepNavy hover:text-softGrey transition">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -211,7 +240,6 @@
 
                 <div class="pt-2">
                     <h4 class="font-serif-custom text-2xl italic text-deepNavy">Ahmed & Esraa</h4>
-                    <!-- Custom Floral Divider -->
                     <div class="flex justify-center pt-3">
                         <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
                     </div>
@@ -225,15 +253,12 @@
                 <h2 class="font-serif-custom text-2xl md:text-3xl tracking-[0.2em] uppercase text-deepNavy font-normal">
                     The Schedule
                 </h2>
-                <!-- Custom Floral Divider -->
                 <div class="flex justify-center pt-3">
                     <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
                 </div>
             </div>
 
-            <!-- Timeline Container with Enhanced Sinuous Center Line & Blue Pearl Moving Icon -->
             <div class="relative max-w-sm mx-auto">
-                
                 <div class="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-20 pointer-events-none z-10">
                     <svg id="timelineSvg" class="w-full h-full overflow-visible" viewBox="0 0 80 900" fill="none" preserveAspectRatio="none">
                         <path id="zigzagPath" d="M40 0 C 75 180, 5 360, 40 540 C 75 720, 5 810, 40 900" stroke="#A9C2D9" stroke-width="2" stroke-dasharray="none" opacity="0.85"/>
@@ -292,7 +317,6 @@
                         <p class="text-[11px] text-softGrey italic">Cake Cutting & Party</p>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -301,35 +325,26 @@
             <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy mb-2">
                 Counting Down To Forever
             </h3>
-            <!-- Custom Floral Divider -->
             <div class="flex justify-center mb-8">
                 <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
             </div>
 
-            <!-- Countdown Timer -->
             <div id="countdown" class="flex justify-center items-center max-w-sm mx-auto text-deepNavy">
-                <!-- Days -->
                 <div class="flex-1 text-center px-1">
                     <span id="days" class="block font-serif-custom text-3xl md:text-4xl font-normal">00</span>
                     <span class="block text-[9px] tracking-[0.25em] uppercase text-softGrey mt-1">Days</span>
                 </div>
                 <div class="w-[1px] h-10 bg-silverBlue/70"></div>
-
-                <!-- Hours -->
                 <div class="flex-1 text-center px-1">
                     <span id="hours" class="block font-serif-custom text-3xl md:text-4xl font-normal">00</span>
                     <span class="block text-[9px] tracking-[0.25em] uppercase text-softGrey mt-1">Hours</span>
                 </div>
                 <div class="w-[1px] h-10 bg-silverBlue/70"></div>
-
-                <!-- Minutes -->
                 <div class="flex-1 text-center px-1">
                     <span id="minutes" class="block font-serif-custom text-3xl md:text-4xl font-normal">00</span>
                     <span class="block text-[9px] tracking-[0.25em] uppercase text-softGrey mt-1">Minutes</span>
                 </div>
                 <div class="w-[1px] h-10 bg-silverBlue/70"></div>
-
-                <!-- Seconds -->
                 <div class="flex-1 text-center px-1">
                     <span id="seconds" class="block font-serif-custom text-3xl md:text-4xl font-normal">00</span>
                     <span class="block text-[9px] tracking-[0.25em] uppercase text-softGrey mt-1">Seconds</span>
@@ -343,7 +358,6 @@
                 <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy">
                     Our Wedding Details
                 </h3>
-                <!-- Custom Floral Divider -->
                 <div class="flex justify-center">
                     <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
                 </div>
@@ -381,7 +395,6 @@
             <h3 class="font-serif-custom text-2xl md:text-3xl tracking-[0.2em] uppercase text-deepNavy mb-2">
                 Dress Code
             </h3>
-            <!-- Custom Floral Divider -->
             <div class="flex justify-center mb-6">
                 <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
             </div>
@@ -404,7 +417,6 @@
             <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy mb-2">
                 Will You Join Us?
             </h3>
-            <!-- Custom Floral Divider -->
             <div class="flex justify-center mb-6">
                 <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
             </div>
@@ -465,7 +477,6 @@
             const introScreen = document.getElementById('introScreen');
             const bgAudio = document.getElementById('bgAudio');
 
-            // تشغيل الموسيقى الخلفية عند فتح الدعوة مع ضمان كتم أي صوت مزدوج
             if (bgAudio) {
                 bgAudio.play().then(() => {
                     isPlaying = true;
@@ -479,7 +490,6 @@
             if (envelopeContainer) envelopeContainer.style.display = 'none';
             if (openingVideo) {
                 openingVideo.classList.remove('hidden');
-                // التأكد من كتم صوت فيديو الغلاف نهائياً لضمان نقاء الموسيقى الخلفية
                 openingVideo.muted = true;
                 openingVideo.play().catch(e => {
                     closeIntro();
@@ -521,7 +531,6 @@
             }
         }
 
-        /* High Performance Scroll Handling using requestAnimationFrame */
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (!ticking) {
