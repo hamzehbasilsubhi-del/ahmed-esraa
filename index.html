@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmed & Esraa - Wedding Invitation</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Pinyon Script, Cormorant Garamond & Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pearl: '#FDFBF7',
+                        mist: '#D4E2EE',
+                        silverBlue: '#A9C2D9',
+                        softGrey: '#8FA1B3',
+                        deepNavy: '#2C3E50',
+                        navyDark: '#1A252F',
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                        script: ['"Pinyon Script"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* توحيد خلفية الدعوة كاملة بمزيج ناعم ونظيف */
+        body {
+            background: linear-gradient(180deg, #FDFBF7 0%, #D4E2EE 25%, #FDFBF7 50%, #D4E2EE 75%, #FDFBF7 100%);
+            background-size: 100% 3000px;
+            color: #2C3E50;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .font-serif-custom {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .font-script {
+            font-family: 'Pinyon Script', cursive;
+        }
+        
+        /* إزالة الخلفيات الشفافة للأقسام العادية لتبدو متصلة */
+        .unified-bg {
+            background: transparent;
+        }
+
+        /* خلفية بيضاء خالصة ومخصصة لقسم الترحيب أسفل البانر مباشرة */
+        .welcome-white-bg {
+            background-color: #FFFFFF;
+        }
+
+        /* خلفية خاصة بقسم الجدول مع التدرج السلس لإنهاء القسم بلون #d4e3ee للاندماج مع العداد */
+        .schedule-bg {
+            background-image: linear-gradient(to bottom, #FFFFFF 0%, rgba(212, 227, 238, 0.4) 30%, rgba(212, 227, 238, 0.85) 85%, #d4e3ee 100%), url('assets/schedule_bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-blend-mode: overlay;
+        }
+
+        /* Typewriter & Sequential Fade-in Animations with GPU Acceleration */
+        @keyframes typing {
+            from { width: 0; opacity: 0; }
+            to { width: 100%; opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .typewriter-line-1 {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+            animation: typing 1.2s steps(30, end) 0.5s forwards;
+            will-change: width, opacity;
+        }
+
+        .typewriter-line-2 {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+            animation: typing 0.8s steps(10, end) 1.7s forwards;
+            will-change: width, opacity;
+        }
+
+        .typewriter-line-3 {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+            animation: typing 1.2s steps(30, end) 2.3s forwards;
+            will-change: width, opacity;
+        }
+
+        .animate-fade-in-date {
+            animation: fadeIn 1.2s ease-out 3.5s forwards;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+    </style>
+</head>
+<body class="text-deepNavy antialiased selection:bg-mist selection:text-deepNavy">
+
+    <!-- Audio Player Toggle (Top Right) -->
+    <div class="fixed top-5 right-5 z-50">
+        <button id="audioToggle" onclick="toggleAudio()" aria-label="Toggle Audio" class="w-10 h-10 rounded-full bg-white/85 backdrop-blur-md shadow-sm border border-mist flex items-center justify-center text-deepNavy hover:bg-white transition">
+            <svg id="audioIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+            </svg>
+        </button>
+        <audio id="bgAudio" loop preload="auto">
+            <source src="assets/wedding_melody.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-md mx-auto min-h-screen shadow-2xl relative overflow-hidden bg-transparent">
+
+        <!-- SECTION 1: FULL SCREEN VIDEO BACKGROUND HERO -->
+        <section class="relative h-screen w-full flex flex-col justify-center items-center text-center px-6 overflow-hidden">
+            
+            <!-- Video Background covering the entire screen -->
+            <div class="absolute inset-0 w-full h-full z-0 overflow-hidden bg-black">
+                <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-80">
+                    <source src="assets/swan_hero_video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <!-- التدرج المحسن في الأسفل ليتلاشى بسلاسة تامة نحو اللون الأبيض الناصع `#FFFFFF` -->
+                <div class="absolute inset-0 bg-gradient-to-b from-white/20 via-black/10 via-65% to-[#FFFFFF]"></div>
+            </div>
+
+            <!-- Centered Content with Sequential Vertical Typewriter Layout -->
+            <div class="relative z-10 space-y-2 my-auto flex flex-col items-center">
+                
+                <!-- Line 1: Ahmed -->
+                <div class="inline-block">
+                    <h1 class="font-script text-3xl md:text-4xl text-deepNavy drop-shadow-md typewriter-line-1">
+                        Ahmed
+                    </h1>
+                </div>
+
+                <!-- Line 2: & -->
+                <div class="inline-block">
+                    <span class="font-script text-2xl md:text-3xl text-deepNavy drop-shadow-sm typewriter-line-2">
+                        &
+                    </span>
+                </div>
+
+                <!-- Line 3: Esraa -->
+                <div class="inline-block">
+                    <h1 class="font-script text-3xl md:text-4xl text-deepNavy drop-shadow-md typewriter-line-3">
+                        Esraa
+                    </h1>
+                </div>
+
+                <!-- Date (Fade In after typewriter) -->
+                <div class="animate-fade-in-date pt-3">
+                    <p class="font-serif-custom text-sm tracking-[0.25em] uppercase text-deepNavy/90 font-medium drop-shadow-sm">
+                        28 &bull; 11 &bull; 2026
+                    </p>
+                </div>
+            </div>
+
+            <!-- Scroll Down Indicator at the bottom -->
+            <div class="absolute bottom-6 left-0 right-0 z-10 animate-bounce">
+                <a href="#welcome" aria-label="Scroll to welcome section" class="text-deepNavy hover:text-softGrey transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- SECTION 2: WELCOME MESSAGE (خلفية بيضاء خالصة) -->
+        <section id="welcome" class="py-16 px-8 text-center relative welcome-white-bg">
+            <div class="max-w-xs mx-auto space-y-6">
+                <h3 class="font-serif-custom text-xs tracking-[0.3em] uppercase text-softGrey">
+                    With Joyful Hearts, We Invite You To Celebrate The Beginning Of Our Forever.
+                </h3>
+
+                <p class="font-serif-custom text-base leading-relaxed text-deepNavy/80 italic">
+                    The families of <span class="font-bold">Mr. Mohammed Taha Bukhari</span> and <span class="font-bold">Mr. Fayez Mahfouz</span> have the honor of inviting you to the wedding ceremony[cite: 6]
+                </p>
+
+                <div class="pt-2">
+                    <h4 class="font-serif-custom text-2xl italic text-deepNavy">Ahmed & Esraa</h4>
+                    <div class="flex justify-center pt-2">
+                        <span class="inline-block w-6 h-[1px] bg-silverBlue"></span>
+                        <span class="mx-2 text-[10px] text-silverBlue">&hearts;</span>
+                        <span class="inline-block w-6 h-[1px] bg-silverBlue"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: THE SCHEDULE -->
+        <section id="scheduleSection" class="py-16 px-4 relative schedule-bg overflow-hidden">
+            <div class="text-center mb-12">
+                <h2 class="font-serif-custom text-2xl md:text-3xl tracking-[0.2em] uppercase text-deepNavy font-normal">
+                    The Schedule
+                </h2>
+                <div class="flex justify-center pt-2">
+                    <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+                    <span class="mx-2 text-xs text-silverBlue">&hearts;</span>
+                    <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+                </div>
+            </div>
+
+            <!-- Timeline Container with Enhanced Sinuous Center Line & Blue Pearl Moving Icon -->
+            <div class="relative max-w-sm mx-auto">
+                
+                <!-- SVG Sinuous Center Line with Blue Pearl Moving Element -->
+                <div class="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-20 pointer-events-none z-10">
+                    <svg id="timelineSvg" class="w-full h-full overflow-visible" viewBox="0 0 80 900" fill="none" preserveAspectRatio="none">
+                        <path id="zigzagPath" d="M40 0 C 75 180, 5 360, 40 540 C 75 720, 5 810, 40 900" stroke="#A9C2D9" stroke-width="2" stroke-dasharray="none" opacity="0.85"/>
+                        <image id="movingPearl" href="assets/blue_pearl.png" x="26" y="-14" width="28" height="28" class="transition-all duration-75 drop-shadow-md" />
+                    </svg>
+                </div>
+
+                <!-- Event 1: Guest Arrival (4:30 PM) -->
+                <div class="relative z-20 flex items-center justify-between mb-16 flex-row-reverse">
+                    <div class="w-5/12 text-center pl-2 relative flex items-center justify-center">
+                        <img src="assets/shoe_icon.png" alt="Guest arrival" class="w-20 h-auto mx-auto object-contain drop-shadow-sm" loading="lazy">
+                    </div>
+                    <div class="w-2/12 flex justify-center relative"></div>
+                    <div class="w-5/12 text-right pr-2">
+                        <span class="block text-[11px] font-semibold tracking-widest text-softGrey uppercase mb-1">4:30 PM</span>
+                        <h4 class="font-serif-custom text-lg text-deepNavy font-medium leading-tight mb-1">Guest Arrival</h4>
+                        <p class="text-[11px] text-softGrey italic">Welcome & Seating</p>
+                    </div>
+                </div>
+
+                <!-- Event 2: Zaffa (5:00 PM) -->
+                <div class="relative z-20 flex items-center justify-between mb-16">
+                    <div class="w-5/12 text-center pr-2 relative flex items-center justify-center">
+                        <img src="assets/rings_icon.png" alt="Zaffa" class="w-18 h-auto mx-auto object-contain drop-shadow-sm" loading="lazy">
+                    </div>
+                    <div class="w-2/12 flex justify-center relative"></div>
+                    <div class="w-5/12 text-left pl-2">
+                        <span class="block text-[11px] font-semibold tracking-widest text-softGrey uppercase mb-1">5:00 PM</span>
+                        <h4 class="font-serif-custom text-lg text-deepNavy font-medium leading-tight mb-1">Zaffa</h4>
+                        <p class="text-[11px] text-softGrey italic">Grand Procession</p>
+                    </div>
+                </div>
+
+                <!-- Event 3: Dinner (7:30 PM) -->
+                <div class="relative z-20 flex items-center justify-between mb-16 flex-row-reverse">
+                    <div class="w-5/12 text-center pl-2 relative flex items-center justify-center">
+                        <img src="assets/champagne_icon.png" alt="Dinner" class="w-18 h-auto mx-auto object-contain drop-shadow-sm" loading="lazy">
+                    </div>
+                    <div class="w-2/12 flex justify-center relative"></div>
+                    <div class="w-5/12 text-right pr-2">
+                        <span class="block text-[11px] font-semibold tracking-widest text-softGrey uppercase mb-1">7:30 PM</span>
+                        <h4 class="font-serif-custom text-lg text-deepNavy font-medium leading-tight mb-1">Dinner</h4>
+                        <p class="text-[11px] text-softGrey italic">Celebration Feast</p>
+                    </div>
+                </div>
+
+                <!-- Event 4: Second Entrance (8:30 PM) -->
+                <div class="relative z-20 flex items-center justify-between">
+                    <div class="w-5/12 text-center pr-2 relative flex items-center justify-center">
+                        <img src="assets/couple_illustration.png" alt="Second entrance" class="w-20 h-auto mx-auto object-contain drop-shadow-sm" loading="lazy">
+                    </div>
+                    <div class="w-2/12 flex justify-center relative"></div>
+                    <div class="w-5/12 text-left pl-2">
+                        <span class="block text-[11px] font-semibold tracking-widest text-softGrey uppercase mb-1">8:30 PM</span>
+                        <h4 class="font-serif-custom text-lg text-deepNavy font-medium leading-tight mb-1">Second Entrance</h4>
+                        <p class="text-[11px] text-softGrey italic">Cake Cutting & Party</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 4: COUNTDOWN TIMER -->
+        <section class="py-16 px-6 text-center unified-bg">
+            <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy mb-2">
+                Counting Down To Forever
+            </h3>
+            <div class="flex justify-center mb-8">
+                <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+                <span class="mx-2 text-xs text-silverBlue">&hearts;</span>
+                <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div id="countdown" class="flex justify-center items-center max-w-sm mx-auto text-deepNavy">
+                <!-- Days -->
+                <div class="flex-1 text-center px-1">
+                    <span id="days" class="block font-serif-custom text-3xl md:text-4xl font-normal">00</span>
+                    <span class="block text-[9px] tracking-[0.25em] uppercase text-softGrey mt-1">Days</span>
+                </div>
+                <div class="w-[1px] h-10 bg-silverBlue/70"></div>
+
+                <!-- Hours -->
+                <div class="flex-1 text-center px-1">
+                    <span id="hours" class="block font-serif-custom text-3xl md:text-4xl font-normal">00</span>
+                    <span class="block text-[9px] tracking-[0.25em] uppercase text-softGrey mt-1">Hours</span>
+                </div>
+                <div class="w-[1px] h-10 bg-silverBlue/70"></div>
+
+                <!-- Minutes -->
+                <div class="flex-1 text-center px-1">
+                    <span id="minutes" class="block font-serif-custom text-3xl md:text-4xl font-normal">00</span>
+                    <span class="block text-[9px] tracking-[0.25em] uppercase text-softGrey mt-1">Minutes</span>
+                </div>
+                <div class="w-[1px] h-10 bg-silverBlue/70"></div>
+
+                <!-- Seconds -->
+                <div class="flex-1 text-center px-1">
+                    <span id="seconds" class="block font-serif-custom text-3xl md:text-4xl font-normal">00</span>
+                    <span class="block text-[9px] tracking-[0.25em] uppercase text-softGrey mt-1">Seconds</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: OUR WEDDING DETAILS -->
+        <section class="relative py-16 text-center unified-bg overflow-hidden">
+            <div class="max-w-xs mx-auto space-y-6 px-6">
+                <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy">
+                    Our Wedding Details
+                </h3>
+                <div class="flex justify-center">
+                    <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+                    <span class="mx-2 text-xs text-silverBlue">&hearts;</span>
+                    <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+                </div>
+
+                <p class="font-serif-custom text-xl italic text-deepNavy">
+                    November 28, 2026
+                </p>
+
+                <div class="my-4">
+                    <img src="assets/venue_illustration.png" alt="Venue Resort Illustration" class="w-full h-auto object-cover drop-shadow-sm" loading="lazy">
+                </div>
+
+                <div class="space-y-1">
+                    <p class="font-serif-custom text-base text-deepNavy font-medium">Fujairah Beach Resort</p>
+                    <p class="text-xs text-softGrey uppercase tracking-widest">Fujairah, United Arab Emirates</p>
+                </div>
+
+                <div class="rounded-xl overflow-hidden shadow-sm border border-silverBlue/50 h-36 relative bg-mist/20">
+                    <iframe title="Wedding Venue Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.15858273614!2d56.335!3d25.128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDA3JzQwLjgiTiA1NsKwMjAnMDYuMCJF!5e0!3m2!1sen!2sae!4v1650000000000!5m2!1sen!2sae" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="opacity-90"></iframe>
+                </div>
+
+                <div>
+                    <button onclick="addToCalendar()" class="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-silverBlue bg-white/80 text-xs uppercase tracking-widest text-deepNavy hover:bg-white shadow-sm transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Add to Calendar
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: DRESS CODE & ADULTS ONLY -->
+        <section class="py-16 px-6 text-center unified-bg">
+            <h3 class="font-serif-custom text-2xl md:text-3xl tracking-[0.2em] uppercase text-deepNavy mb-2">
+                Dress Code
+            </h3>
+            <div class="flex justify-center mb-6">
+                <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+                <span class="mx-2 text-xs text-silverBlue">&hearts;</span>
+                <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+            </div>
+
+            <p class="font-serif-custom text-lg md:text-xl text-deepNavy font-medium tracking-wide mb-8">
+                Formal Suits <span class="mx-2 text-silverBlue">|</span> Soiree Dresses
+            </p>
+
+            <p class="font-serif-custom text-base italic text-deepNavy/80 max-w-xs mx-auto leading-relaxed mb-6">
+                To ensure an elegant and intimate celebration, we kindly request that our wedding remain an adults-only occasion. Thank you for your understanding
+            </p>
+
+            <div class="pt-4">
+                <p class="font-script text-2xl text-deepNavy">With love,</p>
+            </div>
+        </section>
+
+        <!-- SECTION 7: RSVP FORM -->
+        <section class="py-16 px-8 text-center unified-bg">
+            <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy mb-2">
+                Will You Join Us?
+            </h3>
+            <div class="flex justify-center mb-6">
+                <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+                <span class="mx-2 text-xs text-silverBlue">&hearts;</span>
+                <span class="inline-block w-8 h-[1px] bg-silverBlue"></span>
+            </div>
+
+            <p class="text-xs uppercase tracking-widest text-softGrey mb-8">
+                Kindly respond by November 14, 2026.
+            </p>
+
+            <form id="rsvpForm" onsubmit="handleRSVP(event)" class="space-y-4 max-w-xs mx-auto text-left">
+                <div>
+                    <label for="guestName" class="block text-[10px] uppercase tracking-widest text-softGrey mb-1">Full Name(s)</label>
+                    <input type="text" id="guestName" required class="w-full bg-transparent border-b border-silverBlue py-2 text-sm text-deepNavy focus:outline-none focus:border-deepNavy">
+                </div>
+
+                <div class="pt-4 space-y-3">
+                    <button type="button" onclick="setAttendance('Joyfully Accepts')" id="btnAccept" class="w-full py-3 rounded-full border border-silverBlue text-xs uppercase tracking-[0.2em] text-deepNavy bg-white/50 hover:bg-mist/30 transition">
+                        Joyfully Accepts
+                    </button>
+                    <button type="button" onclick="setAttendance('Regretfully Declines')" id="btnDecline" class="w-full py-3 rounded-full border border-silverBlue text-xs uppercase tracking-[0.2em] text-deepNavy bg-white/50 hover:bg-mist/30 transition">
+                        Regretfully Declines
+                    </button>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full py-3.5 rounded-full bg-deepNavy text-white text-xs uppercase tracking-[0.2em] shadow-md hover:bg-navyDark transition">
+                        Send Response
+                    </button>
+                </div>
+            </form>
+            <div id="rsvpSuccess" class="hidden pt-4 text-sm font-serif-custom italic text-deepNavy">
+                Thank you for your response! We look forward to celebrating with you.
+            </div>
+        </section>
+
+        <!-- SECTION 8: FOOTER -->
+        <section class="relative pt-12 pb-0 text-center overflow-hidden">
+            <div class="w-full leading-none relative">
+                <img src="assets/footer_swan.png" alt="Landscape with swans" class="w-full h-auto object-cover block opacity-95" loading="lazy">
+                
+                <!-- Text Overlaid on the lower portion of the footer swan image -->
+                <div class="absolute bottom-6 left-0 right-0 z-10 px-4 text-center">
+                    <h4 class="font-serif-custom text-2xl md:text-3xl italic text-deepNavy drop-shadow-sm mb-1">Ahmed & Esraa</h4>
+                    <p class="text-[10px] uppercase tracking-[0.3em] text-deepNavy/80 drop-shadow-sm font-medium">Our forever begins here.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JavaScript Interactions & Blue Pearl Animation -->
+    <script>
+        // Audio Toggle Script
+        let isPlaying = false;
+        function toggleAudio() {
+            const audio = document.getElementById('bgAudio');
+            const icon = document.getElementById('audioIcon');
+            if (!audio || !icon) return;
+
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />`;
+            } else {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />`;
+                }).catch(e => console.log("Audio play prevented by browser policy:", e));
+            }
+        }
+
+        // Scroll-driven animation for the blue pearl image
+        window.addEventListener('scroll', () => {
+            const section = document.getElementById('scheduleSection');
+            const path = document.getElementById('zigzagPath');
+            const pearl = document.getElementById('movingPearl');
+            
+            if (!section || !path || !pearl) return;
+
+            const rect = section.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            const totalScrollable = rect.height;
+            const currentScroll = windowHeight - rect.top;
+            
+            let scrollProgress = currentScroll / (windowHeight + totalScrollable);
+            scrollProgress = Math.max(0, Math.min(1, scrollProgress));
+
+            const pathLength = path.getTotalLength();
+            const point = path.getPointAtLength(scrollProgress * pathLength);
+
+            const pearlWidth = 28;
+            const pearlHeight = 28;
+            pearl.setAttribute('x', point.x - (pearlWidth / 2));
+            pearl.setAttribute('y', point.y - (pearlHeight / 2));
+        });
+
+        // Countdown Timer Logic (Target: Nov 28, 2026 16:30:00)
+        const weddingDate = new Date("November 28, 2026 16:30:00").getTime();
+        function updateCountdown() {
+            const now = Date.now();
+            const distance = weddingDate - now;
+
+            if (distance > 0) {
+                const daysEl = document.getElementById("days");
+                const hoursEl = document.getElementById("hours");
+                const minutesEl = document.getElementById("minutes");
+                const secondsEl = document.getElementById("seconds");
+
+                if (daysEl) daysEl.innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                if (hoursEl) hoursEl.innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                if (minutesEl) minutesEl.innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                if (secondsEl) secondsEl.innerText = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // RSVP Selection & Handling
+        let selectedAttendance = '';
+        function setAttendance(status) {
+            selectedAttendance = status;
+            const btnAccept = document.getElementById('btnAccept');
+            const btnDecline = document.getElementById('btnDecline');
+            if (!btnAccept || !btnDecline) return;
+            
+            if (status === 'Joyfully Accepts') {
+                btnAccept.classList.add('bg-deepNavy', 'text-white');
+                btnAccept.classList.remove('bg-white/50');
+                btnDecline.classList.remove('bg-deepNavy', 'text-white');
+                btnDecline.classList.add('bg-white/50');
+            } else {
+                btnDecline.classList.add('bg-deepNavy', 'text-white');
+                btnDecline.classList.remove('bg-white/50');
+                btnAccept.classList.remove('bg-deepNavy', 'text-white');
+                btnAccept.classList.add('bg-white/50');
+            }
+        }
+
+        function handleRSVP(e) {
+            e.preventDefault();
+            if (!selectedAttendance) {
+                alert('Please select whether you will accept or decline.');
+                return;
+            }
+            const form = document.getElementById('rsvpForm');
+            const successMsg = document.getElementById('rsvpSuccess');
+            if (form) form.style.display = 'none';
+            if (successMsg) successMsg.style.display = 'block';
+        }
+
+        // Add to Calendar Integration
+        function addToCalendar() {
+            const title = encodeURIComponent("Ahmed & Esraa Wedding");
+            const details = encodeURIComponent("Join us in celebrating our wedding ceremony at Fujairah Beach Resort.");
+            const location = encodeURIComponent("Fujairah Beach Resort, Fujairah, UAE");
+            const dates = "20261128T123000Z/20261128T210000Z";
+            
+            const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
+            window.open(gCalUrl, '_blank', 'noopener,noreferrer');
+        }
+    </script>
+</body>
+</html>
