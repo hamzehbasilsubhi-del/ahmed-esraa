@@ -113,7 +113,7 @@
 </head>
 <body class="text-deepNavy antialiased selection:bg-mist selection:text-deepNavy">
 
-    <!-- INTRO SCREEN: Interactive Envelope & Opening Video[cite: 8] -->
+    <!-- INTRO SCREEN: Interactive Envelope & Opening Video -->
     <div id="introScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-between bg-[#2C3E50] cursor-pointer py-10" onclick="startInvitation()">
         <!-- Envelope Cover Image Container -->
         <div id="envelopeContainer" class="relative max-w-md w-full h-full flex items-center justify-center p-4">
@@ -205,7 +205,7 @@
                 </h3>
 
                 <p class="font-serif-custom text-base leading-relaxed text-deepNavy/80 italic">
-                    The families of <span class="font-bold">Mr. Mohammed Taha Bukhari</span> and <span class="font-bold">Mr. Fayez Mahfouz</span> have the honor of inviting you to the wedding ceremony[cite: 6]
+                    The families of <span class="font-bold">Mr. Mohammed Taha Bukhari</span> and <span class="font-bold">Mr. Fayez Mahfouz</span> have the honor of inviting you to the wedding ceremony
                 </p>
 
                 <div class="pt-2">
@@ -452,7 +452,7 @@
 
     </main>
 
-    <!-- JavaScript Interactions & Blue Pearl Animation -->
+    <!-- Optimized JavaScript Interactions & Blue Pearl Animation -->
     <script>
         let hasStarted = false;
         function startInvitation() {
@@ -517,46 +517,58 @@
             }
         }
 
+        /* High Performance Scroll Handling using requestAnimationFrame */
+        let ticking = false;
         window.addEventListener('scroll', () => {
-            const section = document.getElementById('scheduleSection');
-            const path = document.getElementById('zigzagPath');
-            const pearl = document.getElementById('movingPearl');
-            
-            if (!section || !path || !pearl) return;
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const section = document.getElementById('scheduleSection');
+                    const path = document.getElementById('zigzagPath');
+                    const pearl = document.getElementById('movingPearl');
+                    
+                    if (section && path && pearl && typeof path.getTotalLength === 'function') {
+                        const rect = section.getBoundingClientRect();
+                        const windowHeight = window.innerHeight;
+                        const totalScrollable = rect.height;
+                        const currentScroll = windowHeight - rect.top;
+                        
+                        let scrollProgress = currentScroll / (windowHeight + totalScrollable);
+                        scrollProgress = Math.max(0, Math.min(1, scrollProgress));
 
-            const rect = section.getBoundingClientRect();
-            const windowHeight = window.innerHeight;
+                        const pathLength = path.getTotalLength();
+                        const point = path.getPointAtLength(scrollProgress * pathLength);
 
-            const totalScrollable = rect.height;
-            const currentScroll = windowHeight - rect.top;
-            
-            let scrollProgress = currentScroll / (windowHeight + totalScrollable);
-            scrollProgress = Math.max(0, Math.min(1, scrollProgress));
-
-            const pathLength = path.getTotalLength();
-            const point = path.getPointAtLength(scrollProgress * pathLength);
-
-            const pearlWidth = 28;
-            const pearlHeight = 28;
-            pearl.setAttribute('x', point.x - (pearlWidth / 2));
-            pearl.setAttribute('y', point.y - (pearlHeight / 2));
-        });
+                        const pearlWidth = 28;
+                        const pearlHeight = 28;
+                        pearl.setAttribute('x', point.x - (pearlWidth / 2));
+                        pearl.setAttribute('y', point.y - (pearlHeight / 2));
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
 
         const weddingDate = new Date("November 28, 2026 16:30:00").getTime();
         function updateCountdown() {
             const now = Date.now();
             const distance = weddingDate - now;
 
-            if (distance > 0) {
-                const daysEl = document.getElementById("days");
-                const hoursEl = document.getElementById("hours");
-                const minutesEl = document.getElementById("minutes");
-                const secondsEl = document.getElementById("seconds");
+            const daysEl = document.getElementById("days");
+            const hoursEl = document.getElementById("hours");
+            const minutesEl = document.getElementById("minutes");
+            const secondsEl = document.getElementById("seconds");
 
+            if (distance > 0) {
                 if (daysEl) daysEl.innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
                 if (hoursEl) hoursEl.innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
                 if (minutesEl) minutesEl.innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
                 if (secondsEl) secondsEl.innerText = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+            } else {
+                if (daysEl) daysEl.innerText = "00";
+                if (hoursEl) hoursEl.innerText = "00";
+                if (minutesEl) minutesEl.innerText = "00";
+                if (secondsEl) secondsEl.innerText = "00";
             }
         }
         setInterval(updateCountdown, 1000);
