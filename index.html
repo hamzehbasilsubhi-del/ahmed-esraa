@@ -30,7 +30,6 @@
         }
     </script>
     <style>
-        /* توحيد خلفية الصفحة العامة وتجنب التمرير العرضي */
         body {
             background: linear-gradient(180deg, #FDFBF7 0%, #D4E2EE 25%, #FDFBF7 50%, #D4E2EE 75%, #FDFBF7 100%);
             color: #2C3E50;
@@ -63,7 +62,6 @@
             background-blend-mode: overlay;
         }
 
-        /* شاشة الغلاف بملء الشاشة وتجنب أي تشوه في الأبعاد */
         #introScreen {
             position: fixed;
             inset: 0;
@@ -85,6 +83,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: #2C3E50;
         }
 
         #envelopeContainer img {
@@ -99,9 +98,9 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            background-color: #2C3E50;
         }
 
-        /* حاوية الدعوة الأساسية متجاوبة تماماً مع شاشات الموبايل */
         main {
             width: 100%;
             max-width: 480px;
@@ -113,7 +112,6 @@
             background-color: transparent;
         }
 
-        /* تأثيرات الكتابة المتسلسلة (تتפعل فقط بعد إزالة حالة التوقف) */
         @keyframes typing {
             from { width: 0; opacity: 0; }
             to { width: 100%; opacity: 1; }
@@ -154,11 +152,10 @@
 </head>
 <body class="text-deepNavy antialiased selection:bg-mist selection:text-deepNavy">
 
-    <!-- INTRO SCREEN: Interactive Envelope & Opening Video -->
+    <!-- INTRO SCREEN -->
     <div id="introScreen" onclick="startInvitation()">
         <div id="envelopeContainer">
             <img src="assets/envelope_cover.png" alt="Wedding Envelope" />
-            
             <div class="absolute bottom-12 z-10 text-center animate-pulse cursor-pointer">
                 <span class="font-script text-3xl md:text-4xl text-white tracking-wide drop-shadow-md">Tap to Open</span>
             </div>
@@ -170,7 +167,7 @@
         </video>
     </div>
 
-    <!-- Audio Player Toggle (Top Right) -->
+    <!-- Audio Player Toggle -->
     <div class="fixed top-5 right-5 z-40">
         <button id="audioToggle" onclick="toggleAudio()" aria-label="Toggle Audio" class="w-10 h-10 rounded-full bg-white/85 backdrop-blur-md shadow-sm border border-mist flex items-center justify-center text-deepNavy hover:bg-white transition">
             <svg id="audioIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -185,9 +182,8 @@
     <!-- MAIN CONTAINER -->
     <main>
 
-        <!-- SECTION 1: FULL SCREEN VIDEO BACKGROUND HERO -->
+        <!-- SECTION 1: HERO -->
         <section class="relative h-screen w-full flex flex-col justify-center items-center text-center px-6 overflow-hidden">
-            
             <div class="absolute inset-0 w-full h-full z-0 overflow-hidden bg-black">
                 <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-80">
                     <source src="assets/swan_hero_video.mp4" type="video/mp4">
@@ -196,27 +192,18 @@
                 <div class="absolute inset-0 bg-gradient-to-b from-white/20 via-black/10 via-65% to-[#FFFFFF]"></div>
             </div>
 
-            <!-- أحجام الخطوط المكبرة للأسماء والتاريخ -->
             <div class="relative z-10 space-y-2 my-auto flex flex-col items-center">
                 <div class="inline-block">
-                    <h1 id="heroName1" class="font-script text-5xl md:text-6xl text-deepNavy drop-shadow-md typewriter-paused typewriter-line-1">
-                        Ahmed
-                    </h1>
+                    <h1 id="heroName1" class="font-script text-5xl md:text-6xl text-deepNavy drop-shadow-md typewriter-paused typewriter-line-1">Ahmed</h1>
                 </div>
                 <div class="inline-block">
-                    <span id="heroAmpersand" class="font-script text-4xl md:text-5xl text-deepNavy drop-shadow-sm typewriter-paused typewriter-line-2">
-                        &
-                    </span>
+                    <span id="heroAmpersand" class="font-script text-4xl md:text-5xl text-deepNavy drop-shadow-sm typewriter-paused typewriter-line-2">&</span>
                 </div>
                 <div class="inline-block">
-                    <h1 id="heroName2" class="font-script text-5xl md:text-6xl text-deepNavy drop-shadow-md typewriter-paused typewriter-line-3">
-                        Esraa
-                    </h1>
+                    <h1 id="heroName2" class="font-script text-5xl md:text-6xl text-deepNavy drop-shadow-md typewriter-paused typewriter-line-3">Esraa</h1>
                 </div>
                 <div id="heroDate" class="animate-fade-in-date pt-3">
-                    <p class="font-serif-custom text-base md:text-lg tracking-[0.25em] uppercase text-deepNavy/90 font-medium drop-shadow-sm">
-                        28 &bull; 11 &bull; 2026
-                    </p>
+                    <p class="font-serif-custom text-base md:text-lg tracking-[0.25em] uppercase text-deepNavy/90 font-medium drop-shadow-sm">28 &bull; 11 &bull; 2026</p>
                 </div>
             </div>
 
@@ -229,17 +216,13 @@
             </div>
         </section>
 
-        <!-- SECTION 2: WELCOME MESSAGE -->
+        <!-- SECTION 2: WELCOME -->
         <section id="welcome" class="py-16 px-8 text-center relative welcome-white-bg">
             <div class="max-w-xs mx-auto space-y-6">
-                <h3 class="font-serif-custom text-xs tracking-[0.3em] uppercase text-softGrey">
-                    With Joyful Hearts, We Invite You To Celebrate The Beginning Of Our Forever.
-                </h3>
-
+                <h3 class="font-serif-custom text-xs tracking-[0.3em] uppercase text-softGrey">With Joyful Hearts, We Invite You To Celebrate The Beginning Of Our Forever.</h3>
                 <p class="font-serif-custom text-base leading-relaxed text-deepNavy/80 italic">
                     The families of <span class="font-bold">Mr. Mohammed Taha Bukhari</span> and <span class="font-bold">Mr. Fayez Mahfouz</span> have the honor of inviting you to the wedding ceremony
                 </p>
-
                 <div class="pt-2">
                     <h4 class="font-serif-custom text-2xl italic text-deepNavy">Ahmed & Esraa</h4>
                     <div class="flex justify-center pt-3">
@@ -249,12 +232,10 @@
             </div>
         </section>
 
-        <!-- SECTION 3: THE SCHEDULE -->
+        <!-- SECTION 3: SCHEDULE -->
         <section id="scheduleSection" class="py-16 px-4 relative schedule-bg overflow-hidden">
             <div class="text-center mb-10">
-                <h2 class="font-serif-custom text-2xl md:text-3xl tracking-[0.2em] uppercase text-deepNavy font-normal">
-                    The Schedule
-                </h2>
+                <h2 class="font-serif-custom text-2xl md:text-3xl tracking-[0.2em] uppercase text-deepNavy font-normal">The Schedule</h2>
                 <div class="flex justify-center pt-3">
                     <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
                 </div>
@@ -268,7 +249,6 @@
                     </svg>
                 </div>
 
-                <!-- Event 1 -->
                 <div class="relative z-20 flex items-center justify-between mb-16 flex-row-reverse">
                     <div class="w-5/12 text-center pl-2 relative flex items-center justify-center">
                         <img src="assets/shoe_icon.png" alt="Guest arrival" class="w-20 h-auto mx-auto object-contain drop-shadow-sm" loading="lazy">
@@ -281,7 +261,6 @@
                     </div>
                 </div>
 
-                <!-- Event 2 -->
                 <div class="relative z-20 flex items-center justify-between mb-16">
                     <div class="w-5/12 text-center pr-2 relative flex items-center justify-center">
                         <img src="assets/rings_icon.png" alt="Zaffa" class="w-18 h-auto mx-auto object-contain drop-shadow-sm" loading="lazy">
@@ -294,7 +273,6 @@
                     </div>
                 </div>
 
-                <!-- Event 3 -->
                 <div class="relative z-20 flex items-center justify-between mb-16 flex-row-reverse">
                     <div class="w-5/12 text-center pl-2 relative flex items-center justify-center">
                         <img src="assets/champagne_icon.png" alt="Dinner" class="w-18 h-auto mx-auto object-contain drop-shadow-sm" loading="lazy">
@@ -307,7 +285,6 @@
                     </div>
                 </div>
 
-                <!-- Event 4 -->
                 <div class="relative z-20 flex items-center justify-between">
                     <div class="w-5/12 text-center pr-2 relative flex items-center justify-center">
                         <img src="assets/couple_illustration.png" alt="Second entrance" class="w-20 h-auto mx-auto object-contain drop-shadow-sm" loading="lazy">
@@ -322,11 +299,9 @@
             </div>
         </section>
 
-        <!-- SECTION 4: COUNTDOWN TIMER -->
+        <!-- SECTION 4: COUNTDOWN -->
         <section class="py-16 px-6 text-center unified-bg">
-            <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy mb-2">
-                Counting Down To Forever
-            </h3>
+            <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy mb-2">Counting Down To Forever</h3>
             <div class="flex justify-center mb-8">
                 <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
             </div>
@@ -354,19 +329,15 @@
             </div>
         </section>
 
-        <!-- SECTION 5: OUR WEDDING DETAILS -->
+        <!-- SECTION 5: DETAILS & MAP -->
         <section class="relative py-16 text-center unified-bg overflow-hidden">
             <div class="max-w-xs mx-auto space-y-6 px-6">
-                <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy">
-                    Our Wedding Details
-                </h3>
+                <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy">Our Wedding Details</h3>
                 <div class="flex justify-center">
                     <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
                 </div>
 
-                <p class="font-serif-custom text-xl italic text-deepNavy">
-                    November 28, 2026
-                </p>
+                <p class="font-serif-custom text-xl italic text-deepNavy">November 28, 2026</p>
 
                 <div class="my-4">
                     <img src="assets/venue_illustration.png" alt="Venue Resort Illustration" class="w-full h-auto object-cover drop-shadow-sm" loading="lazy">
@@ -377,8 +348,9 @@
                     <p class="text-xs text-softGrey uppercase tracking-widest">Fujairah, United Arab Emirates</p>
                 </div>
 
+                <!-- تم حل تأخير الخريطة بتحميل فوري وخفيف عبر loading="lazy" -->
                 <div class="rounded-xl overflow-hidden shadow-sm border border-silverBlue/50 h-36 relative bg-mist/20">
-                    <iframe title="Wedding Venue Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.15858273614!2d56.335!3d25.128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDA3JzQwLjgiTiA1NsKwMjAnMDYuMCJF!5e0!3m2!1sen!2sae!4v1650000000000!5m2!1sen!2sae" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="opacity-90"></iframe>
+                    <iframe title="Wedding Venue Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.15858273614!2d56.335!3d25.128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDA3JzQwLjgiTiA1NsKwMjAnMDGhAi!5e0!3m2!1sen!2sae!4v1650000000000!5m2!1sen!2sae" width="100%" height="100%" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="opacity-90"></iframe>
                 </div>
 
                 <div>
@@ -392,11 +364,9 @@
             </div>
         </section>
 
-        <!-- SECTION 6: DRESS CODE & ADULTS ONLY -->
+        <!-- SECTION 6: DRESS CODE -->
         <section class="py-16 px-6 text-center unified-bg">
-            <h3 class="font-serif-custom text-2xl md:text-3xl tracking-[0.2em] uppercase text-deepNavy mb-2">
-                Dress Code
-            </h3>
+            <h3 class="font-serif-custom text-2xl md:text-3xl tracking-[0.2em] uppercase text-deepNavy mb-2">Dress Code</h3>
             <div class="flex justify-center mb-6">
                 <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
             </div>
@@ -414,18 +384,14 @@
             </div>
         </section>
 
-        <!-- SECTION 7: RSVP FORM -->
+        <!-- SECTION 7: RSVP -->
         <section class="py-16 px-8 text-center unified-bg">
-            <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy mb-2">
-                Will You Join Us?
-            </h3>
+            <h3 class="font-serif-custom text-2xl tracking-[0.2em] uppercase text-deepNavy mb-2">Will You Join Us?</h3>
             <div class="flex justify-center mb-6">
                 <img src="assets/floral_divider.png" alt="Divider" class="w-40 h-auto object-contain opacity-85">
             </div>
 
-            <p class="text-xs uppercase tracking-widest text-softGrey mb-8">
-                Kindly respond by November 14, 2026.
-            </p>
+            <p class="text-xs uppercase tracking-widest text-softGrey mb-8">Kindly respond by November 14, 2026.</p>
 
             <form id="rsvpForm" onsubmit="handleRSVP(event)" class="space-y-4 max-w-xs mx-auto text-left">
                 <div>
@@ -434,18 +400,12 @@
                 </div>
 
                 <div class="pt-4 space-y-3">
-                    <button type="button" onclick="setAttendance('Joyfully Accepts')" id="btnAccept" class="w-full py-3 rounded-full border border-silverBlue text-xs uppercase tracking-[0.2em] text-deepNavy bg-white/50 hover:bg-mist/30 transition">
-                        Joyfully Accepts
-                    </button>
-                    <button type="button" onclick="setAttendance('Regretfully Declines')" id="btnDecline" class="w-full py-3 rounded-full border border-silverBlue text-xs uppercase tracking-[0.2em] text-deepNavy bg-white/50 hover:bg-mist/30 transition">
-                        Regretfully Declines
-                    </button>
+                    <button type="button" onclick="setAttendance('Joyfully Accepts')" id="btnAccept" class="w-full py-3 rounded-full border border-silverBlue text-xs uppercase tracking-[0.2em] text-deepNavy bg-white/50 hover:bg-mist/30 transition">Joyfully Accepts</button>
+                    <button type="button" onclick="setAttendance('Regretfully Declines')" id="btnDecline" class="w-full py-3 rounded-full border border-silverBlue text-xs uppercase tracking-[0.2em] text-deepNavy bg-white/50 hover:bg-mist/30 transition">Regretfully Declines</button>
                 </div>
 
                 <div class="pt-4">
-                    <button type="submit" class="w-full py-3.5 rounded-full bg-deepNavy text-white text-xs uppercase tracking-[0.2em] shadow-md hover:bg-navyDark transition">
-                        Send Response
-                    </button>
+                    <button type="submit" class="w-full py-3.5 rounded-full bg-deepNavy text-white text-xs uppercase tracking-[0.2em] shadow-md hover:bg-navyDark transition">Send Response</button>
                 </div>
             </form>
             <div id="rsvpSuccess" class="hidden pt-4 text-sm font-serif-custom italic text-deepNavy">
@@ -457,7 +417,6 @@
         <section class="relative pt-12 pb-0 text-center overflow-hidden">
             <div class="w-full leading-none relative">
                 <img src="assets/footer_swan.png" alt="Landscape with swans" class="w-full h-auto object-cover block opacity-95" loading="lazy">
-                
                 <div class="absolute bottom-6 left-0 right-0 z-10 px-4 text-center">
                     <h4 class="font-serif-custom text-2xl md:text-3xl italic text-deepNavy drop-shadow-sm mb-1">Ahmed & Esraa</h4>
                     <p class="text-[10px] uppercase tracking-[0.3em] text-deepNavy/80 drop-shadow-sm font-medium">Our forever begins here.</p>
@@ -467,7 +426,7 @@
 
     </main>
 
-    <!-- JavaScript Interactions & Audio/Animation Control -->
+    <!-- JavaScript -->
     <script>
         let hasStarted = false;
         function startInvitation() {
@@ -488,15 +447,16 @@
                 }).catch(e => console.log("Audio play prevented:", e));
             }
 
-            if (envelopeContainer) envelopeContainer.style.display = 'none';
             if (openingVideo) {
                 openingVideo.classList.remove('hidden');
                 openingVideo.muted = true;
                 
-                // تشغيل الفيديو مع معالجة احترازية للأخطاء المتوقعة في المتصفحات
+                // حل مشكلة الفلاش: إخفاء الغلاف تماماً بالتزامن الفوري مع بدء تشغيل الفيديو دون تأخير
                 const playPromise = openingVideo.play();
                 if (playPromise !== undefined) {
-                    playPromise.catch(e => {
+                    playPromise.then(() => {
+                        if (envelopeContainer) envelopeContainer.style.display = 'none';
+                    }).catch(e => {
                         console.log("Video autoplay prevented or failed:", e);
                         closeIntro();
                     });
