@@ -90,7 +90,7 @@
         #envelopeContainer img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* يملأ الشاشة تماماً بدون تشوه */
+            object-fit: cover;
         }
 
         #openingVideo {
@@ -98,7 +98,7 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* تناسق تام لفيديو الفتح مع الشاشة */
+            object-fit: cover;
         }
 
         /* حاوية الدعوة الأساسية متجاوبة تماماً مع شاشات الموبايل */
@@ -113,7 +113,7 @@
             background-color: transparent;
         }
 
-        /* تأثيرات الكتابة المتسلسلة */
+        /* تأثيرات الكتابة المتسلسلة (تتפعل فقط بعد إزالة حالة التوقف) */
         @keyframes typing {
             from { width: 0; opacity: 0; }
             to { width: 100%; opacity: 1; }
@@ -124,30 +124,31 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .typewriter-line-1 {
+        .typewriter-paused {
             overflow: hidden;
             white-space: nowrap;
             width: 0;
-            animation: typing 1.2s steps(30, end) 0.5s forwards;
+            opacity: 0;
         }
 
-        .typewriter-line-2 {
-            overflow: hidden;
-            white-space: nowrap;
-            width: 0;
-            animation: typing 0.8s steps(10, end) 1.7s forwards;
+        .typewriter-line-1.active {
+            animation: typing 1.2s steps(30, end) 0.1s forwards;
         }
 
-        .typewriter-line-3 {
-            overflow: hidden;
-            white-space: nowrap;
-            width: 0;
-            animation: typing 1.2s steps(30, end) 2.3s forwards;
+        .typewriter-line-2.active {
+            animation: typing 0.8s steps(10, end) 1.2s forwards;
+        }
+
+        .typewriter-line-3.active {
+            animation: typing 1.2s steps(30, end) 1.8s forwards;
         }
 
         .animate-fade-in-date {
-            animation: fadeIn 1.2s ease-out 3.5s forwards;
             opacity: 0;
+        }
+
+        .animate-fade-in-date.active {
+            animation: fadeIn 1.2s ease-out 2.8s forwards;
         }
     </style>
 </head>
@@ -195,24 +196,25 @@
                 <div class="absolute inset-0 bg-gradient-to-b from-white/20 via-black/10 via-65% to-[#FFFFFF]"></div>
             </div>
 
+            <!-- أحجام الخطوط المكبرة للأسماء والتاريخ -->
             <div class="relative z-10 space-y-2 my-auto flex flex-col items-center">
                 <div class="inline-block">
-                    <h1 class="font-script text-3xl md:text-4xl text-deepNavy drop-shadow-md typewriter-line-1">
+                    <h1 id="heroName1" class="font-script text-5xl md:text-6xl text-deepNavy drop-shadow-md typewriter-paused typewriter-line-1">
                         Ahmed
                     </h1>
                 </div>
                 <div class="inline-block">
-                    <span class="font-script text-2xl md:text-3xl text-deepNavy drop-shadow-sm typewriter-line-2">
+                    <span id="heroAmpersand" class="font-script text-4xl md:text-5xl text-deepNavy drop-shadow-sm typewriter-paused typewriter-line-2">
                         &
                     </span>
                 </div>
                 <div class="inline-block">
-                    <h1 class="font-script text-3xl md:text-4xl text-deepNavy drop-shadow-md typewriter-line-3">
+                    <h1 id="heroName2" class="font-script text-5xl md:text-6xl text-deepNavy drop-shadow-md typewriter-paused typewriter-line-3">
                         Esraa
                     </h1>
                 </div>
-                <div class="animate-fade-in-date pt-3">
-                    <p class="font-serif-custom text-sm tracking-[0.25em] uppercase text-deepNavy/90 font-medium drop-shadow-sm">
+                <div id="heroDate" class="animate-fade-in-date pt-3">
+                    <p class="font-serif-custom text-base md:text-lg tracking-[0.25em] uppercase text-deepNavy/90 font-medium drop-shadow-sm">
                         28 &bull; 11 &bull; 2026
                     </p>
                 </div>
@@ -474,7 +476,6 @@
 
             const envelopeContainer = document.getElementById('envelopeContainer');
             const openingVideo = document.getElementById('openingVideo');
-            const introScreen = document.getElementById('introScreen');
             const bgAudio = document.getElementById('bgAudio');
 
             if (bgAudio) {
@@ -491,9 +492,15 @@
             if (openingVideo) {
                 openingVideo.classList.remove('hidden');
                 openingVideo.muted = true;
-                openingVideo.play().catch(e => {
-                    closeIntro();
-                });
+                
+                // تشغيل الفيديو مع معالجة احترازية للأخطاء المتوقعة في المتصفحات
+                const playPromise = openingVideo.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        console.log("Video autoplay prevented or failed:", e);
+                        closeIntro();
+                    });
+                }
 
                 openingVideo.onended = () => {
                     closeIntro();
@@ -509,8 +516,23 @@
                 introScreen.style.opacity = '0';
                 setTimeout(() => {
                     introScreen.style.visibility = 'hidden';
+                    triggerHeroAnimations();
                 }, 800);
+            } else {
+                triggerHeroAnimations();
             }
+        }
+
+        function triggerHeroAnimations() {
+            const name1 = document.getElementById('heroName1');
+            const ampersand = document.getElementById('heroAmpersand');
+            const name2 = document.getElementById('heroName2');
+            const date = document.getElementById('heroDate');
+
+            if (name1) name1.classList.add('active');
+            if (ampersand) ampersand.classList.add('active');
+            if (name2) name2.classList.add('active');
+            if (date) date.classList.add('active');
         }
 
         let isPlaying = false;
