@@ -55,7 +55,7 @@
             background-color: #FFFFFF;
         }
 
-        /* خلفية خاصة بقسم الجدول مع التدرج السلس لإنهاء القسم بلون #d4e3ee للاندماج مع العداد */
+        /* خلفية خاصة بقسم الجدول مع التدرج السلس لإنهاء القسم للاندماج مع العداد */
         .schedule-bg {
             background-image: linear-gradient(to bottom, #FFFFFF 0%, rgba(212, 227, 238, 0.4) 30%, rgba(212, 227, 238, 0.85) 85%, #d4e3ee 100%), url('assets/schedule_bg.png');
             background-size: cover;
@@ -125,7 +125,7 @@
             </div>
         </div>
 
-        <!-- Envelope Opening Video (Hidden initially, plays on click) -->
+        <!-- Envelope Opening Video (Muted to ensure only background music plays) -->
         <video id="openingVideo" class="absolute inset-0 w-full h-full object-cover hidden" playsinline muted>
             <source src="assets/envelope_opening.mp4" type="video/mp4">
             Your browser does not support the video tag.
@@ -139,6 +139,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
             </svg>
         </button>
+        <!-- Background Music Audio Element -->
         <audio id="bgAudio" loop preload="auto">
             <source src="assets/wedding_melody.mp3" type="audio/mpeg">
         </audio>
@@ -150,7 +151,7 @@
         <!-- SECTION 1: FULL SCREEN VIDEO BACKGROUND HERO -->
         <section class="relative h-screen w-full flex flex-col justify-center items-center text-center px-6 overflow-hidden">
             
-            <!-- Video Background covering the entire screen -->
+            <!-- Video Background covering the entire screen (Muted to keep focus on background music) -->
             <div class="absolute inset-0 w-full h-full z-0 overflow-hidden bg-black">
                 <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-80">
                     <source src="assets/swan_hero_video.mp4" type="video/mp4">
@@ -452,7 +453,7 @@
 
     </main>
 
-    <!-- Optimized JavaScript Interactions & Blue Pearl Animation -->
+    <!-- JavaScript Interactions & Audio/Animation Control -->
     <script>
         let hasStarted = false;
         function startInvitation() {
@@ -464,6 +465,7 @@
             const introScreen = document.getElementById('introScreen');
             const bgAudio = document.getElementById('bgAudio');
 
+            // تشغيل الموسيقى الخلفية عند فتح الدعوة مع ضمان كتم أي صوت مزدوج
             if (bgAudio) {
                 bgAudio.play().then(() => {
                     isPlaying = true;
@@ -477,6 +479,8 @@
             if (envelopeContainer) envelopeContainer.style.display = 'none';
             if (openingVideo) {
                 openingVideo.classList.remove('hidden');
+                // التأكد من كتم صوت فيديو الغلاف نهائياً لضمان نقاء الموسيقى الخلفية
+                openingVideo.muted = true;
                 openingVideo.play().catch(e => {
                     closeIntro();
                 });
