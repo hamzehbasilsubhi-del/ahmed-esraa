@@ -84,6 +84,8 @@
             align-items: center;
             justify-content: center;
             background-color: #2C3E50;
+            z-index: 2;
+            transition: opacity 0.3s ease;
         }
 
         #envelopeContainer img {
@@ -99,6 +101,7 @@
             height: 100%;
             object-fit: cover;
             background-color: #2C3E50;
+            z-index: 1;
         }
 
         main {
@@ -154,6 +157,7 @@
 
     <!-- INTRO SCREEN -->
     <div id="introScreen" onclick="startInvitation()">
+        <!-- صورة الغلاف الثابتة فوق الفيديو تماماً لضمان التطابق التام وعدم وجود أي وميض -->
         <div id="envelopeContainer">
             <img src="assets/envelope_cover.png" alt="Wedding Envelope" />
             <div class="absolute bottom-12 z-10 text-center animate-pulse cursor-pointer">
@@ -161,7 +165,8 @@
             </div>
         </div>
 
-        <video id="openingVideo" class="hidden" playsinline muted preload="auto">
+        <!-- الفيديو يعمل في الخلفية وجاهز وفوقه الغلاف -->
+        <video id="openingVideo" playsinline muted preload="auto">
             <source src="assets/envelope_opening.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -351,7 +356,7 @@
                 </div>
 
                 <div onclick="openLocationMap()" class="rounded-xl overflow-hidden shadow-sm border border-silverBlue/50 h-36 relative bg-mist/20 cursor-pointer group transition hover:shadow-md">
-                    <iframe title="Wedding Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.15858273614!2d56.335!3d25.128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ef4f981084bbf01%3A0x86bb7e8becc1ea04!2sBeach%20Resort%20Fujairah!5e0!3m2!1sen!2sae!4v1650000000000!5m2!1sen!2sae" width="100%" height="100%" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="opacity-90 pointer-events-none"></iframe>
+                    <iframe title="Wedding Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.15858273614!2d56.335!3d25.128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ef4f981084bbf01%3A0x86bb7e8becc1ea04!2sThe%20Address%20Beach%20Resort%20Fujairah!5e0!3m2!1sen!2sae!4v1650000000000!5m2!1sen!2sae" width="100%" height="100%" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="opacity-90 pointer-events-none"></iframe>
                     <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                         <span class="bg-deepNavy/80 text-white text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full backdrop-blur-sm">Click to Open Map</span>
                     </div>
@@ -440,13 +445,18 @@
 
     <!-- JavaScript -->
     <script>
-        // التحميل المسبق الصامت لفيديو الفتح فور فتح الصفحة لمنع أي تقطع أو تأخير
-        window.addEventListener('DOMContentLoaded', () => {
-            const openingVideo = document.getElementById('openingVideo');
-            if (openingVideo) {
-                openingVideo.load();
-            }
-        });
+        // التحميل المسبق للفيديو والتأكد من جهوزيته التامة بسلاسة
+        const openingVideo = document.getElementById('openingVideo');
+        let isVideoReady = false;
+
+        if (openingVideo) {
+            openingVideo.preload = "auto";
+            openingVideo.load();
+            
+            openingVideo.addEventListener('canplaythrough', () => {
+                isVideoReady = true;
+            });
+        }
 
         let hasStarted = false;
         function startInvitation() {
@@ -454,7 +464,6 @@
             hasStarted = true;
 
             const envelopeContainer = document.getElementById('envelopeContainer');
-            const openingVideo = document.getElementById('openingVideo');
             const bgAudio = document.getElementById('bgAudio');
 
             if (bgAudio) {
@@ -468,13 +477,20 @@
             }
 
             if (openingVideo) {
-                openingVideo.classList.remove('hidden');
                 openingVideo.muted = true;
                 
+                // تشغيل الفيديو فوراً في الخلفية تحت الغلاف
                 const playPromise = openingVideo.play();
+                
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
-                        if (envelopeContainer) envelopeContainer.style.display = 'none';
+                        // إخفاء صورة الغلاف بسلاسة فائقة بمجرد بدء تشغيل الفيديو لتلافي أي تأخير مرئي
+                        if (envelopeContainer) {
+                            envelopeContainer.style.opacity = '0';
+                            setTimeout(() => {
+                                envelopeContainer.style.display = 'none';
+                            }, 300);
+                        }
                     }).catch(e => {
                         console.log("Video autoplay prevented or failed:", e);
                         closeIntro();
