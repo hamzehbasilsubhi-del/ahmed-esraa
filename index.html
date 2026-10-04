@@ -7,7 +7,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Pinyon Script, Cormorant Garamond & Montserrat -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -192,24 +192,25 @@
                 <div class="absolute inset-0 bg-gradient-to-b from-white/20 via-black/10 via-65% to-[#FFFFFF]"></div>
             </div>
 
-            <div class="relative z-10 space-y-2 my-auto flex flex-col items-center">
+            <div class="relative z-10 space-y-3 my-auto flex flex-col items-center">
                 <div class="inline-block">
-                    <h1 id="heroName1" class="font-script text-5xl md:text-6xl text-deepNavy drop-shadow-md typewriter-paused typewriter-line-1">Ahmed</h1>
+                    <h1 id="heroName1" class="font-script text-6xl md:text-7xl text-deepNavy drop-shadow-md typewriter-paused typewriter-line-1">Ahmed</h1>
                 </div>
                 <div class="inline-block">
-                    <span id="heroAmpersand" class="font-script text-4xl md:text-5xl text-deepNavy drop-shadow-sm typewriter-paused typewriter-line-2">&</span>
+                    <span id="heroAmpersand" class="font-script text-5xl md:text-6xl text-deepNavy drop-shadow-sm typewriter-paused typewriter-line-2">&</span>
                 </div>
                 <div class="inline-block">
-                    <h1 id="heroName2" class="font-script text-5xl md:text-6xl text-deepNavy drop-shadow-md typewriter-paused typewriter-line-3">Esraa</h1>
+                    <h1 id="heroName2" class="font-script text-6xl md:text-7xl text-deepNavy drop-shadow-md typewriter-paused typewriter-line-3">Esraa</h1>
                 </div>
-                <div id="heroDate" class="animate-fade-in-date pt-3">
-                    <p class="font-serif-custom text-base md:text-lg tracking-[0.25em] uppercase text-deepNavy/90 font-medium drop-shadow-sm">28 &bull; 11 &bull; 2026</p>
+                <div id="heroDate" class="animate-fade-in-date pt-4">
+                    <p class="font-serif-custom text-lg md:text-xl tracking-[0.25em] uppercase text-deepNavy/90 font-medium drop-shadow-sm">28 &bull; 11 &bull; 2026</p>
                 </div>
             </div>
 
-            <div class="absolute bottom-6 left-0 right-0 z-10 animate-bounce">
-                <a href="#welcome" aria-label="Scroll to welcome section" class="text-deepNavy hover:text-softGrey transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="absolute bottom-6 left-0 right-0 z-10 flex flex-col items-center animate-bounce">
+                <a href="#welcome" aria-label="Scroll to welcome section" class="text-deepNavy hover:text-softGrey transition flex flex-col items-center">
+                    <span class="font-script text-2xl text-deepNavy tracking-wide mb-0.5 drop-shadow-sm">Scroll Down</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7" />
                     </svg>
                 </a>
@@ -219,9 +220,10 @@
         <!-- SECTION 2: WELCOME -->
         <section id="welcome" class="py-16 px-8 text-center relative welcome-white-bg">
             <div class="max-w-xs mx-auto space-y-6">
-                <h3 class="font-serif-custom text-xs tracking-[0.3em] uppercase text-softGrey">With Joyful Hearts, We Invite You To Celebrate The Beginning Of Our Forever.</h3>
-                <p class="font-serif-custom text-base leading-relaxed text-deepNavy/80 italic">
-                    The families of <span class="font-bold">Mr. Mohammed Taha Bukhari</span> and <span class="font-bold">Mr. Fayez Mahfouz</span> have the honor of inviting you to the wedding ceremony
+                <h3 class="font-serif-custom text-sm md:text-base font-semibold tracking-[0.2em] uppercase text-deepNavy leading-relaxed">With Joyful Hearts, We Invite You To Celebrate The Beginning Of Our Forever.</h3>
+                
+                <p class="font-serif-custom text-base leading-relaxed text-deepNavy/85 italic">
+                    The families of <span class="font-bold text-deepNavy">Mr. Mohammed Taha Bukhari</span> and <span class="font-bold text-deepNavy">Mr. Fayez Mahfouz Ibrahim</span> have the honor of inviting you to the wedding ceremony
                 </p>
                 <div class="pt-2">
                     <h4 class="font-serif-custom text-2xl italic text-deepNavy">Ahmed & Esraa</h4>
@@ -293,7 +295,7 @@
                     <div class="w-5/12 text-left pl-2">
                         <span class="block text-[11px] font-semibold tracking-widest text-softGrey uppercase mb-1">8:30 PM</span>
                         <h4 class="font-serif-custom text-lg text-deepNavy font-medium leading-tight mb-1">Second Entrance</h4>
-                        <p class="text-[11px] text-softGrey italic">Cake Cutting & Party</p>
+                        <p class="text-[11px] text-softGrey italic">Party</p>
                     </div>
                 </div>
             </div>
@@ -344,13 +346,14 @@
                 </div>
 
                 <div class="space-y-1">
-                    <p class="font-serif-custom text-base text-deepNavy font-medium">Fujairah Beach Resort</p>
+                    <!-- تم تحديث اسم الفندق هنا -->
+                    <p class="font-serif-custom text-base text-deepNavy font-medium">Beach Resort Fujairah</p>
                     <p class="text-xs text-softGrey uppercase tracking-widest">Fujairah, United Arab Emirates</p>
                 </div>
 
-                <!-- تم حل تأخير الخريطة بتحميل فوري وخفيف عبر loading="lazy" -->
+                <!-- تم تحديث الخريطة بالرابط والإحداثيات الصحيحة للفندق -->
                 <div class="rounded-xl overflow-hidden shadow-sm border border-silverBlue/50 h-36 relative bg-mist/20">
-                    <iframe title="Wedding Venue Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.15858273614!2d56.335!3d25.128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDA3JzQwLjgiTiA1NsKwMjAnMDGhAi!5e0!3m2!1sen!2sae!4v1650000000000!5m2!1sen!2sae" width="100%" height="100%" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="opacity-90"></iframe>
+                    <iframe title="Beach Resort Fujairah Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.15858273614!2d56.335!3d25.128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ef4f981084bbf01%3A0x86bb7e8becc1ea04!2sBeach%20Resort%20Fujairah!5e0!3m2!1sen!2sae!4v1650000000000!5m2!1sen!2sae" width="100%" height="100%" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="opacity-90"></iframe>
                 </div>
 
                 <div>
@@ -451,7 +454,6 @@
                 openingVideo.classList.remove('hidden');
                 openingVideo.muted = true;
                 
-                // حل مشكلة الفلاش: إخفاء الغلاف تماماً بالتزامن الفوري مع بدء تشغيل الفيديو دون تأخير
                 const playPromise = openingVideo.play();
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
@@ -603,8 +605,8 @@
 
         function addToCalendar() {
             const title = encodeURIComponent("Ahmed & Esraa Wedding");
-            const details = encodeURIComponent("Join us in celebrating our wedding ceremony at Fujairah Beach Resort.");
-            const location = encodeURIComponent("Fujairah Beach Resort, Fujairah, UAE");
+            const details = encodeURIComponent("Join us in celebrating our wedding ceremony at Beach Resort Fujairah.");
+            const location = encodeURIComponent("Beach Resort Fujairah, Fujairah, United Arab Emirates");
             const dates = "20261128T123000Z/20261128T210000Z";
             
             const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
