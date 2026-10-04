@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ahmed & Esraa - Wedding Invitation</title>
+    
+    <!-- Open Graph / Social Media Meta Tags لمنظومة المعاينة الاحترافية على واتساب -->
+    <meta property="og:title" content="Ahmed & Esraa - Wedding Invitation">
+    <meta property="og:description" content="We joyfully invite you to celebrate our wedding. Tap to open your invitation.">
+    <meta property="og:image" content="https://ahmed-esraa.rawnaq.pro/assets/envelope_cover.png">
+    <meta property="og:url" content="https://ahmed-esraa.rawnaq.pro">
+    <meta property="og:type" content="website">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Pinyon Script, Cormorant Garamond & Montserrat -->
@@ -157,7 +165,6 @@
 
     <!-- INTRO SCREEN -->
     <div id="introScreen" onclick="startInvitation()">
-        <!-- صورة الغلاف الثابتة فوق الفيديو تماماً لضمان التطابق التام وعدم وجود أي وميض -->
         <div id="envelopeContainer">
             <img src="assets/envelope_cover.png" alt="Wedding Envelope" />
             <div class="absolute bottom-12 z-10 text-center animate-pulse cursor-pointer">
@@ -165,7 +172,6 @@
             </div>
         </div>
 
-        <!-- الفيديو يعمل في الخلفية وجاهز وفوقه الغلاف -->
         <video id="openingVideo" playsinline muted preload="auto">
             <source src="assets/envelope_opening.mp4" type="video/mp4">
             Your browser does not support the video tag.
@@ -445,7 +451,6 @@
 
     <!-- JavaScript -->
     <script>
-        // التحميل المسبق للفيديو والتأكد من جهوزيته التامة بسلاسة
         const openingVideo = document.getElementById('openingVideo');
         let isVideoReady = false;
 
@@ -479,12 +484,10 @@
             if (openingVideo) {
                 openingVideo.muted = true;
                 
-                // تشغيل الفيديو فوراً في الخلفية تحت الغلاف
                 const playPromise = openingVideo.play();
                 
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
-                        // إخفاء صورة الغلاف بسلاسة فائقة بمجرد بدء تشغيل الفيديو لتلافي أي تأخير مرئي
                         if (envelopeContainer) {
                             envelopeContainer.style.opacity = '0';
                             setTimeout(() => {
