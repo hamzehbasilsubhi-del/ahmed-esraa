@@ -422,6 +422,12 @@
                     <input type="text" id="guestName" required class="w-full bg-transparent border-b border-silverBlue py-2 text-sm text-deepNavy focus:outline-none focus:border-deepNavy">
                 </div>
 
+                <!-- خانة تحديد عدد الضيوف -->
+                <div>
+                    <label for="guestCount" class="block text-[10px] uppercase tracking-widest text-softGrey mb-1">Number of Guests</label>
+                    <input type="number" id="guestCount" value="1" min="1" max="10" required class="w-full bg-transparent border-b border-silverBlue py-2 text-sm text-deepNavy focus:outline-none focus:border-deepNavy">
+                </div>
+
                 <div class="pt-4 space-y-3">
                     <button type="button" onclick="setAttendance('Joyfully Accepts')" id="btnAccept" class="w-full py-3 rounded-full border border-silverBlue text-xs uppercase tracking-[0.2em] text-deepNavy bg-white/50 hover:bg-mist/30 transition">Joyfully Accepts</button>
                     <button type="button" onclick="setAttendance('Regretfully Declines')" id="btnDecline" class="w-full py-3 rounded-full border border-silverBlue text-xs uppercase tracking-[0.2em] text-deepNavy bg-white/50 hover:bg-mist/30 transition">Regretfully Declines</button>
@@ -633,10 +639,47 @@
                 alert('Please select whether you will accept or decline.');
                 return;
             }
-            const form = document.getElementById('rsvpForm');
-            const successMsg = document.getElementById('rsvpSuccess');
-            if (form) form.style.display = 'none';
-            if (successMsg) successMsg.style.display = 'block';
+            
+            const guestName = document.getElementById('guestName').value.trim();
+            const guestCount = document.getElementById('guestCount').value;
+            
+            // تم وضع رابط الـ Web App الخاص بك هنا بشكل صحيح ومباشر
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz0y1_CYFPKnFEJ_g2xuXafrLiZPX2exbPwkr-EOU4gXjnIR_aAKhbW28SKiuhxupIE/exec';
+            
+            const requestData = {
+                guestName: guestName,
+                guestCount: guestCount,
+                attendance: selectedAttendance
+            };
+
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.innerText = 'Sending...';
+            }
+
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8',
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(() => {
+                const form = document.getElementById('rsvpForm');
+                const successMsg = document.getElementById('rsvpSuccess');
+                if (form) form.style.display = 'none';
+                if (successMsg) successMsg.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error!', error);
+                alert('حدث خطأ أثناء إرسال البيانات، يرجى المحاولة مرة أخرى.');
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.innerText = 'Send Response';
+                }
+            });
         }
 
         function openLocationMap() {
